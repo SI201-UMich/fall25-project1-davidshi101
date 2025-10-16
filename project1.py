@@ -2,7 +2,18 @@ import pandas as pd
 
 def load_data(csv_file):
     penguin_data = pd.read_csv(csv_file)
+    if penguin_data is None:
+        print("Error: CSV file not loaded properly.")
+    else:
+        print("CSV file loaded successfully.")
     return penguin_data
+csv_file = 'penguins.csv'
+penguin_data = load_data(csv_file)
+print(penguin_data.head())
+
+def calculate_mean_body_mass_by_sex(penguin_data):
+    mean_body_mass_by_sex = penguin_data.groupby('sex')['body_mass_g'].mean().to_dict()
+    return mean_body_mass_by_sex
 
 def generate_report(mean_bill_lengths_by_species, correlation, mean_flipper_lengths_by_sex, max_body_mass_per_island, mean_body_mass_by_sex, mean_body_mass_by_species):
     print("Penguin Data Analysis Report")
