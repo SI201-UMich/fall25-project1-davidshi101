@@ -1,3 +1,10 @@
+# Name: David Shin 
+# Student ID: 7303 1645
+# Email: davidshi@umich.edu
+# Who or what you worked with on this project (including generative AI like ChatGPT): 
+# If you worked with generative AI also add a statement for how you used it.  
+# Asked ChatGPT hints for errors and suggesting general sturcture of the code
+
 import pandas as pd
 
 def load_data(csv_file):
@@ -11,57 +18,30 @@ csv_file = 'penguins.csv'
 penguin_data = load_data(csv_file)
 print(penguin_data.head())
 
-#David Shin's Calculations
 def calculate_mean_body_mass_by_sex(penguin_data):
-    mean_body_mass_by_sex = penguin_data.groupby('sex')['body_mass_g'].mean().to_dict()
-    return mean_body_mass_by_sex
+    cleaned = penguin_data.dropna(subset=["sex", "island", "body_mass_g"])
+    grouped = cleaned.groupby(["sex", "island"])["body_mass_g"]
+    mean_by_sex = grouped.mean().to_dict()
+    return mean_by_sex
 
 def calculate_mean_body_mass_by_species(penguin_data):
-    mean_body_mass_by_species = penguin_data.groupby('species')['body_mass_g'].mean().to_dict()
-    return mean_body_mass_by_species
+    cleaned = penguin_data.dropna(subset=["species", "sex", "body_mass_g"])
+    grouped = cleaned.groupby(["species", "sex"])["body_mass_g"]
+    mean_by_species = grouped.mean().to_dict()
+    return mean_by_species
 
-#Mo Pofhal's Calculations
-def calculate_mean_bill_length_by_species(penguin_data):
-    mean_bill_lengths_by_species = penguin_data.groupby('species')['bill_length_mm'].mean().to_dict()
-    return mean_bill_lengths_by_species
-
-def calculate_correlation_bill_length_and_depth(penguin_data):
-    correlation = penguin_data['bill_length_mm'].corr(penguin_data['bill_depth_mm'])
-    return correlation
-
-#Zach Solomon's Calculations
-def calculate_mean_flipper_length_by_sex(penguin_data):
-    mean_flipper_lengths_by_sex = penguin_data.groupby('sex')['flipper_length_mm'].mean().to_dict()
-    return mean_flipper_lengths_by_sex
-
-def calculate_max_body_mass_per_island(penguin_data):
-    max_body_mass_per_island = penguin_data.groupby('island')['body_mass_g'].max().to_dict()
-    return max_body_mass_per_island
-
-def generate_report(mean_bill_lengths_by_species, correlation, mean_flipper_lengths_by_sex, max_body_mass_per_island, mean_body_mass_by_sex, mean_body_mass_by_species):
+def generate_report(mean_body_mass_by_sex, mean_body_mass_by_species):
     print("Penguin Data Analysis Report")
     print("===================================")
-    print("\nMean Bill Length by Species:")
-    for species, mean_bill in mean_bill_lengths_by_species.items():
-        print(f"{species}: {mean_bill} mm")
+    print("\nMean Body Mass by Sex (with Island):")
+    for key, mean_mass in mean_body_mass_by_sex.items():
+        sex, island = key
+        print(sex, "on", island, ":", mean_mass, "g")
+    print("\nMean Body Mass by Species (with Sex):")
+    for key, mean_mass in mean_body_mass_by_species.items():
+        species, sex = key
+        print(species, "(", sex, "):", mean_mass, "g")
 
-    print("\nCorrelation between Bill Length and Bill Depth:", correlation)
-
-    print("\nMean Flipper Length by Sex:")
-    for sex, mean_flipper in mean_flipper_lengths_by_sex.items():
-        print(f"{sex}: {mean_flipper} mm")
-
-    print("\nMaximum Body Mass per Island:")
-    for island, max_mass in max_body_mass_per_island.items():
-        print(f"{island}: {max_mass} g")
-
-    print("\nMean Body Mass by Sex:")
-    for sex, mean_mass in mean_body_mass_by_sex.items():
-        print(f"{sex}: {mean_mass} g")
-
-    print("\nMean Body Mass by Species:")
-    for species, mean_mass in mean_body_mass_by_species.items():
-        print(f"{species}: {mean_mass} g")
     print("\n===================================")
 
 def main():
@@ -70,12 +50,8 @@ def main():
 
     mean_body_mass_by_sex = calculate_mean_body_mass_by_sex(penguin_data)
     mean_body_mass_by_species = calculate_mean_body_mass_by_species(penguin_data)
-    mean_bill_lengths_by_species = calculate_mean_bill_length_by_species(penguin_data)
-    correlation = calculate_correlation_bill_length_and_depth(penguin_data)
-    mean_flipper_lengths_by_sex = calculate_mean_flipper_length_by_sex(penguin_data)
-    max_body_mass_per_island = calculate_max_body_mass_per_island(penguin_data)
 
-    generate_report(mean_bill_lengths_by_species, correlation, mean_flipper_lengths_by_sex, max_body_mass_per_island, mean_body_mass_by_sex, mean_body_mass_by_species)
+    generate_report(mean_body_mass_by_sex, mean_body_mass_by_species)
 
 if __name__ == '__main__':
     main()
