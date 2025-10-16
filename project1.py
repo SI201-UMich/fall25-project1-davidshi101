@@ -15,6 +15,10 @@ def calculate_mean_body_mass_by_sex(penguin_data):
     mean_body_mass_by_sex = penguin_data.groupby('sex')['body_mass_g'].mean().to_dict()
     return mean_body_mass_by_sex
 
+def calculate_mean_body_mass_by_species(penguin_data):
+    mean_body_mass_by_species = penguin_data.groupby('species')['body_mass_g'].mean().to_dict()
+    return mean_body_mass_by_species
+
 def generate_report(mean_bill_lengths_by_species, correlation, mean_flipper_lengths_by_sex, max_body_mass_per_island, mean_body_mass_by_sex, mean_body_mass_by_species):
     print("Penguin Data Analysis Report")
     print("===================================")
