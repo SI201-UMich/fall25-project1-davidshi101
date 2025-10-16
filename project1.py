@@ -56,6 +56,18 @@ df2 = pd.DataFrame([
 ])
 print("Test 2 output:", calculate_mean_body_mass_by_sex(df2))
 
+df3 = pd.DataFrame([
+    {"sex":"Male", "island":"Biscoe", "body_mass_g":4000},
+    {"sex":None, "island":"Biscoe", "body_mass_g":3600},
+    {"sex":"Male", "island":None, "body_mass_g":5000},
+    {"sex":"Male", "island":"Dream", "body_mass_g":None},
+])
+print("Test 3 output:", calculate_mean_body_mass_by_sex(df3))
+
+df4 = pd.DataFrame(columns=["sex", "island", "body_mass_g"])
+print("Test 4 output:", calculate_mean_body_mass_by_sex(df4))
+
+
 
 def main():
     csv_file = 'penguins.csv'
