@@ -43,6 +43,20 @@ def generate_report(mean_body_mass_by_sex, mean_flipper_length_by_species_year):
         print(species, "in", year, ":", mean_flipper, "mm")
     print("\n===================================")
 
+df1 = pd.DataFrame([
+    {"sex":"Male", "island":"Biscoe", "body_mass_g":4000},
+    {"sex":"Female", "island":"Biscoe", "body_mass_g":3600},
+    {"sex":"Male", "island":"Dream", "body_mass_g":5000},
+])
+print("Test 1 output:", calculate_mean_body_mass_by_sex(df1))
+
+df2 = pd.DataFrame([
+    {"sex":"Male", "island":"Biscoe", "body_mass_g":4000},
+    {"sex":"Male", "island":"Biscoe", "body_mass_g":4200},
+])
+print("Test 2 output:", calculate_mean_body_mass_by_sex(df2))
+
+
 def main():
     csv_file = 'penguins.csv'
     penguin_data = load_data(csv_file)
