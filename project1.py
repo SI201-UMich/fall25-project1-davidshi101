@@ -24,24 +24,23 @@ def calculate_mean_body_mass_by_sex(penguin_data):
     mean_by_sex = grouped.mean().to_dict()
     return mean_by_sex
 
-def calculate_mean_body_mass_by_species(penguin_data):
-    cleaned = penguin_data.dropna(subset=["species", "sex", "body_mass_g"])
-    grouped = cleaned.groupby(["species", "sex"])["body_mass_g"]
-    mean_by_species = grouped.mean().to_dict()
-    return mean_by_species
+def calculate_mean_flipper_length_by_species_year(penguin_data):
+    cleaned = penguin_data.dropna(subset=["species", "year", "flipper_length_mm"])
+    grouped = cleaned.groupby(["species", "year"])["flipper_length_mm"]
+    mean_by_species_year = grouped.mean().to_dict()
+    return mean_by_species_year
 
-def generate_report(mean_body_mass_by_sex, mean_body_mass_by_species):
+def generate_report(mean_body_mass_by_sex, mean_flipper_length_by_species_year):
     print("Penguin Data Analysis Report")
     print("===================================")
     print("\nMean Body Mass by Sex (with Island):")
     for key, mean_mass in mean_body_mass_by_sex.items():
         sex, island = key
         print(sex, "on", island, ":", mean_mass, "g")
-    print("\nMean Body Mass by Species (with Sex):")
-    for key, mean_mass in mean_body_mass_by_species.items():
-        species, sex = key
-        print(species, "(", sex, "):", mean_mass, "g")
-
+    print("\nMean Flipper Length by Species (split by Year):")
+    for key, mean_flipper in mean_flipper_length_by_species_year.items():
+        species, year = key
+        print(species, "in", year, ":", mean_flipper, "mm")
     print("\n===================================")
 
 def main():
@@ -49,9 +48,9 @@ def main():
     penguin_data = load_data(csv_file)
 
     mean_body_mass_by_sex = calculate_mean_body_mass_by_sex(penguin_data)
-    mean_body_mass_by_species = calculate_mean_body_mass_by_species(penguin_data)
+    mean_flipper_length_by_species_year = calculate_mean_flipper_length_by_species_year(penguin_data)
 
-    generate_report(mean_body_mass_by_sex, mean_body_mass_by_species)
+    generate_report(mean_body_mass_by_sex, mean_flipper_length_by_species_year)
 
 if __name__ == '__main__':
     main()
