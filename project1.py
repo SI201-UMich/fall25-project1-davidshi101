@@ -67,7 +67,28 @@ print("Test 3 output:", calculate_mean_body_mass_by_sex(df3))
 df4 = pd.DataFrame(columns=["sex", "island", "body_mass_g"])
 print("Test 4 output:", calculate_mean_body_mass_by_sex(df4))
 
+df5 = pd.DataFrame([
+    {"species":"Adelie", "year":2008, "flipper_length_mm":190},
+    {"species":"Adelie", "year":2008, "flipper_length_mm":210},
+    {"species":"Gentoo", "year":2009, "flipper_length_mm":220},
+])
+print("Test 5 output:", calculate_mean_flipper_length_by_species_year(df5))
 
+df6 = pd.DataFrame([
+    {"species":"Chinstrap", "year":2007, "flipper_length_mm":195},
+    {"species":"Chinstrap", "year":2007, "flipper_length_mm":205},
+])
+print("Test 6 output:", calculate_mean_flipper_length_by_species_year(df6))
+
+df7 = pd.DataFrame([
+    {"species":"Adelie", "year":2008, "flipper_length_mm":None},
+    {"species":None, "year":2008, "flipper_length_mm":190},
+    {"species":"Gentoo", "year":2009, "flipper_length_mm":220},
+])
+print("Test 7 output:", calculate_mean_flipper_length_by_species_year(df7))
+
+df8 = pd.DataFrame(columns=["species", "year", "flipper_length_mm"])
+print("Test 8 output:", calculate_mean_flipper_length_by_species_year(df8))
 
 def main():
     csv_file = 'penguins.csv'
